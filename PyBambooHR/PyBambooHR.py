@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 #encoding:utf-8
-#author:smeggingsmegger/Scott Blevins
+#original author:smeggingsmegger/Scott Blevins
+#forked by:Mark-Hayden
 #project:PyBambooHR
-#repository:http://github.com/smeggingsmegger/PyBambooHR
+#repository:https://github.com/Mark-Hayden/PyBambooHR
 #license:mit (http://opensource.org/licenses/MIT)
 
 """
@@ -164,7 +165,34 @@ class PyBambooHR(object):
             "benefitClassDate": ("date", ""),
             "benefitClassClass": ("list", ""),
             "benefitClassChangeReason": ("list", ""),
-        }
+            "customWorkState": ("list", ""),
+            "4163": ("list", ""),
+            "4162.1": ("list", ""),
+            "4171": ("list", ""),
+            "4300": ("list", ""),
+            "4170": ("list", ""),
+            "4161": ("list", ""),
+            "4283": ("list", ""),
+            "4247": ("list", ""),
+            "4246.1": ("list", ""),
+            "4249": ("list", ""),
+            "4301": ("list", ""),
+            "4248": ("list", ""),
+            "4245": ("list", ""),
+            "4294": ("list", ""),
+            "4045": ("list", ""),
+            "22": ("list", ""),
+            "1936": ("list", ""),
+            "4046": ("list", ""),
+            "4047": ("list", ""),
+            "4204": ("list", ""),
+            "4271": ("list", ""),
+            "91": ("list", ""),
+            "4267": ("list", ""),
+            "4252": ("list", ""),
+            "1361": ("list", ""),
+            "1360": ("list", ""),
+	}
 
     def _format_employee_xml(self, employee):
         """
@@ -265,6 +293,19 @@ class PyBambooHR(object):
 
         return employees
 
+    def get_user_directory(self):
+        """
+        API method for returning a globally shared company directory.
+        http://www.bamboohr.com/api/documentation/metadata.php#getUsers
+
+        @return: A list of employee dictionaries which is a list of all uesrs in the system
+        """
+        url = self.base_url + 'meta/users'
+        r = requests.get(url, headers=self.headers, auth=(self.api_key, ''))
+        r.raise_for_status()
+
+        return r.json()
+        
     def get_employee(self, employee_id, field_list=None):
         """
         API method for returning a single employee based on employee id.
